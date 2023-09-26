@@ -9,7 +9,8 @@ router.get('/', function(req, res, next) {
 router.post('/login-test', function(req,res) {
   console.log(req.body);
   res.send({
-    username: req.body.username
+    username: req.body.username,
+    password: req.body.password
   })
 })
 
