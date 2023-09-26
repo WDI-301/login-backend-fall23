@@ -7,7 +7,7 @@ require('dotenv').config()
 var cors = require('cors')
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users/users');
 
 var app = express();
 
