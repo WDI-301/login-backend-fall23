@@ -2,14 +2,21 @@ const User = require('../model/User')
 
 module.exports = {
     login: async (req, res) => {
-        if (req.body.password === 'abc') {
-            res.send({
-                username: req.body.username,
-                password: req.body.password
-              })
-        } else {
-            res.send({ username: "Bad Password" })
+        try {
+           // check if user exists / get the user from the db
+           // if no user found throw an error
+        
+            // check if password matches
+            // if a bad match, throw an error
+
+            // return the found user object, response  
+        } 
+        catch (error) {
+            // throw error messages go here
         }
+
+       
+
     },
     register: async (req, res) => {
         try {
