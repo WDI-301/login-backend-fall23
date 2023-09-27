@@ -1,5 +1,8 @@
 const User = require('../model/User')
 
+const bcrpyt = require('bcrypt')
+const saltRounds = 10
+
 module.exports = {
     login: async (req, res) => {
         try {
@@ -15,7 +18,8 @@ module.exports = {
         
             // check if password matches
             // if a bad match, throw an error
-            if (foundUser.password !== req.body.password) {
+            let checkedPassword = await bcrpyt.compare(req.body.password, foundUser.password)
+            if (!checkedPassword) {
                 throw {
                     status: 401,
                     message: "Invalid Password"
@@ -47,20 +51,24 @@ module.exports = {
                     message: "User Exists"
                 }
             }
+            
+            //encrypt password
+            let hashedPassword = await bcrpyt.hash(req.body.password, saltRounds)
+            // console.log('!@-------hashedPassword-------@!')
+            // console.log(hashedPassword)
 
             // create new User 
             let newUser = new User({
                 username: req.body.username,
-                password: req.body.password
+                password: hashedPassword
             })
-
-            //encrypt password
-            
+            // newUser.password = hashedPassword
+                        
             //save newUser to the database
             let savedUser = await newUser.save()
 
             res.status(200).json({
-                userObj: savedUser,
+                username: savedUser.username,
                 message: "Successfully Registered"
             })
 
