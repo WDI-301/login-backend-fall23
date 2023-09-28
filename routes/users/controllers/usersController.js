@@ -1,5 +1,5 @@
 const User = require('../model/User')
-
+const jwt = require('jsonwebtoken')
 const bcrpyt = require('bcrypt')
 const saltRounds = 10
 
@@ -26,11 +26,18 @@ module.exports = {
                 }
             }
 
-            // return the found user object, response  
+            //create jwt token
+            let payload = {
+                id: foundUser._id,
+                username: foundUser.username
+            }
+            let token = await jwt.sign(payload, process.env.SUPER_SECRET_KEY, { expiresIn: 60*5 })
+
+            // return the found user and the token, response  
             res.status(200).json({
                 username: foundUser.username,
-                password: foundUser.password,
-                message: "Successful Login"
+                message: "Successful Login",
+                token: token
             })
         } 
         catch (error) {
