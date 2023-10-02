@@ -83,5 +83,11 @@ module.exports = {
         catch (error) {
             res.status(error.status).json({message: error.message})
         }
+    },
+    authtoken: async (req, res) => {
+        // get the user from the db by id
+        // respond with user info
+        
+        res.send(req.decoded)
     }
 }
