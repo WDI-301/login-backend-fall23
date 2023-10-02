@@ -86,8 +86,13 @@ module.exports = {
     },
     authtoken: async (req, res) => {
         // get the user from the db by id
+        // let foundUser = await User.findOne({_id: req.decode.id})
+        let foundUser = await User.findById(req.decoded.id)
         // respond with user info
         
-        res.send(req.decoded)
+        res.status(200).json({
+            username: foundUser.username,
+            message: "Successful Token Login!"
+        })
     }
 }
